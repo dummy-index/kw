@@ -138,6 +138,7 @@ public:
     int OPT_win95;              // win95 でのフォントのずれの補正
     char *OPT_offResetModes;    // 各種モードをリセット
     int OPT_strokeTimeOut;      // 打鍵が取り消されるまでの待ち時間(ms)
+    int OPT_unveil;             // スクラッチ機能で表示されるようになる入力回数
 
     //<record>
     // 記録用
@@ -392,7 +393,11 @@ public:
     void assignStroke(char *);
     void assignStroke(MOJI);
     void clearAssignStroke();
-
+    
+    /* スクラッチ機能
+     */
+    void scratch_st(MOJI);
+    
     /* 仮想鍵盤
      * --------
      * - makeVKB()      : 仮想鍵盤を作成。

@@ -7,6 +7,7 @@ StringBlock::StringBlock(char *s) {
     //<v127a - gg>
     flagGG = 0;
     //</v127a - gg>
+    flagUnveil = 0;
     if (s == 0) {               // •¶š—ñ‚ª‚È‚¢ê‡
         str = 0;
     } else {                    // •¶š—ñ‚ª‚ ‚éê‡ - •¶š—ñ‚ğ•Û‘¶‚·‚é

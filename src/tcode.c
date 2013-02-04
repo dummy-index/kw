@@ -2090,6 +2090,8 @@ void TCode::makeVKB(bool unlock) {
                 if (((StringBlock *)block)->flagGG)
                     vkbFG[i] = TC_FG_GG;
                 //</v127a - gg>
+                else if (OPT_unveil && !((StringBlock *)block)->flagUnveil)
+                    vkbFace[i] = "..";
                 break;
             case CONTROL_BLOCK:
                 vkbFace[i] = "";
@@ -2414,12 +2416,6 @@ void TCode::statSetup(const char *filename) {
     strcpy(stat.OPT_stat, filename);
 
     stat.map.clear();
-}
-
-void TCode::statOutput() {
-    // 必要ないなら何もしなくていい
-    if (stat.OPT_stat == 0) { return; }
-    if (stat.map.size() == 0) { return; }
 
     // ファイルから読み出して加算
     ifstream *is = new ifstream();
@@ -2438,6 +2434,12 @@ void TCode::statOutput() {
         }
         is->close();
     }
+}
+
+void TCode::statOutput() {
+    // 必要ないなら何もしなくていい
+    if (stat.OPT_stat == 0) { return; }
+    if (stat.map.size() == 0) { return; }
 
     // ファイルに書き出す
     ofstream *os = new ofstream();
@@ -2482,8 +2484,26 @@ void TCode::statCount(MOJI m, int how, int n) {
     case STAT_AUX:    stat.map[m].aux    += n; break;
     default: ;
     }
+    
+    if (stat.map[m].direct + stat.map[m].aux >= OPT_unveil) scratch_st(m);
 }
 //</record>
+
+//<unveil>
+void TCode::scratch_st(MOJI m) {
+        int i;
+	    int check = stTable->look(m);
+        if (check == 0) { return; }
+        int stlen = strokelen(stTable->stroke);
+        ControlBlock *p = table;
+        for (i = 0; i < stlen-1; i++) {
+            Block *np = (p->block)[stTable->stroke[i]];
+            p = (ControlBlock *)np;
+        }
+        Block *np = (p->block)[stTable->stroke[stlen-1]];
+        ((StringBlock *)np)->flagUnveil = 1;
+}
+//</unveil>
 
 /* -------------------------------------------------------------------
  * EOF

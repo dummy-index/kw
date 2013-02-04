@@ -1468,6 +1468,9 @@ void TableWindow::initTC() {
     // strokeTimeOut
     int OPT_strokeTimeOut = GetPrivateProfileInt("kanchoku", "strokeTimeOut", 0, iniFile);
 
+    // unveil
+    int OPT_unveil = GetPrivateProfileInt("kanchoku", "unveil", 0, iniFile);
+
     /* ---------------------------------------------------------------
      */
     // キーボードファイルの読み込み
@@ -1667,6 +1670,7 @@ void TableWindow::initTC() {
     tc->OPT_followCaret = OPT_followCaret;
     STRDUP(tc->OPT_offResetModes, OPT_offResetModes);
     tc->OPT_strokeTimeOut = OPT_strokeTimeOut;
+    tc->OPT_unveil = OPT_unveil;
 
     inSetFocus = 0;
     WM_KANCHOKU_CHAR = 0;

@@ -99,6 +99,7 @@ class StringBlock : public Block {
     //<v127a - gg>
     int flagGG;                 // 熟語ガイド対象
     //</v127a - gg>
+    int flagUnveil;             // スクラッチ済み
     char *getFace() { return face; }
 
     StringBlock(char * = 0);
